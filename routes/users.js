@@ -7,7 +7,9 @@ router.get('/reg', function(req, res, next) {
 });
 
 router.post('/reg', function(req, res, next) {
-  res.send('注册');
+    var user =  req.body;//读取用户提交过来的注册表单
+
+
 });
 
 router.get('/login', function(req, res, next) {
