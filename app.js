@@ -21,7 +21,7 @@ app.use(bodyParser.json());//解析json请求体
 app.use(bodyParser.urlencoded({ extended: false }));//解析表单提交过来格式的请求体
 app.use(cookieParser());//处理cookie req.headers.cookie->req.cookie username=zfpx; password=6 {username:'zfpx',password:6}
 app.use(express.static(path.join(__dirname, 'public')));
-
+require('./db');
 app.use('/', routes);//根据用户请求的路径不同，调用不同的回调函数
 app.use('/users', users);
 app.use('/articles', articles);
