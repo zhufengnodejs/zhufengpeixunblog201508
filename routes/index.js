@@ -6,7 +6,7 @@ var router = express.Router();
  * /请求的路径
  *
  */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
 });
 router.get('/iphone7', function(req, res, next) {

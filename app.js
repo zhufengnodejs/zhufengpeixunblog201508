@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');//处理请求体-> req.body
 
 var routes = require('./routes/index');//主页路由
 var users = require('./routes/users');//用户路由
-
+var articles = require('./routes/articles');//文章路由
 var app = express();//
 
 // view engine setup
@@ -24,12 +24,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);//根据用户请求的路径不同，调用不同的回调函数
 app.use('/users', users);
-
+app.use('/articles', articles);
 // catch 404 and forward to error handle捕捉404错误并发送至错误处理中间件
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;//响应码
-  next(err);//next里如果传了参数意味出错了，并交由错误处理中间件来进行处理
+  next(err);//next里如果传了参数意味出错了，并交由错误
 });
 
 // error handlers
