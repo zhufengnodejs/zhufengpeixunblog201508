@@ -1,5 +1,6 @@
 <% include include/head%>
 <%
+    if(articles)
  for(var i=0;i<articles.length;i++){
      var article = articles[i];
      %>
@@ -10,12 +11,46 @@
                 </a>
             </div>
             <div class="media-body">
-                <h4 class="media-heading"><%=article.title%></h4>
+                <h4 class="media-heading"><a href="/articles/detail/<%=article._id%>"><%=article.title%></a></h4>
                 <p><%=article.content%></p>
+                <p><img style="width:50px;height:50px" src="<%=article.poster%>" alt=""></p>
             </div>
         </div>
       <%
  }
   %>
+<nav>
+    <ul class="pagination">
+        <%
+        if(pageNum>1){
+            %>
+        <li class="<%=pageNum==1?'disabled':''%>">
+            <a href="/articles/list/<%=pageNum-1%>/2?keyword=<%=keyword%>" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <%
+        }
+        %>
 
+        <%
+            if(totalPage>=1)
+        for(var i=1;i<=totalPage;i++){
+            %> <li class="<%=pageNum ==i?'active':''%>"><a href="/articles/list/<%=i%>/2?keyword=<%=keyword%>"><%=i%></a></li><%
+        }
+         %>
+        <%
+         if(pageNum<totalPage){
+             %>
+        <li class="<%=pageNum==totalPage?'disabled':''%>">
+            <a href="/articles/list/<%=pageNum+1%>/2?keyword=<%=keyword%>" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+            <%
+         }
+          %>
+
+    </ul>
+</nav>
 <% include include/foot%>

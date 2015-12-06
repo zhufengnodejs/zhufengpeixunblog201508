@@ -1,12 +1,18 @@
 <% include ../include/head%>
-<form method="post" action="/articles/add">
+<form method="post" action="/articles/add" enctype="multipart/form-data">
+    <input type="text" name="id" value="<%=article._id%>">
     <div class="form-group">
         <label for="title">标题</label>
-        <input type="text" name="title" class="form-control" id="title" placeholder="请输入标题">
+        <input type="text" value="<%=article.title%>" name="title" class="form-control" id="title" placeholder="请输入标题">
     </div>
     <div class="form-group">
         <label for="content">内容</label>
-        <textarea name="content" id="content" cols="30" rows="10" placeholder="请输入内容"></textarea>
+        <textarea name="content" id="content" cols="30" rows="10" placeholder="请输入内容"><%=article.content%></textarea>
+    </div>
+    <div class="form-group">
+        <label for="content">图片</label>
+        <img src="<%=article.poster%>" alt="">
+        <input type="file" name="poster">
     </div>
     <button type="submit" class="btn btn-default">提交</button>
 </form>

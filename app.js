@@ -10,6 +10,7 @@ var flash = require('connect-flash');
 var routes = require('./routes/index');//主页路由
 var users = require('./routes/users');//用户路由
 var articles = require('./routes/articles');//文章路由
+var multer = require('multer');
 var app = express();//
 
 // view engine setup
@@ -36,6 +37,7 @@ app.use(session({
 }))
 app.use(flash());// req.flash
 app.use(function(req,res,next){
+  res.locals.keyword = '';
   res.locals.user = req.session.user;
   res.locals.success = req.flash('success').toString();
   res.locals.error = req.flash('error').toString();
