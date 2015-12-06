@@ -1,8 +1,14 @@
 var mongoose = require('mongoose');
+var ObjectId = mongoose.Schema.Types.ObjectId;
 mongoose.connect('mongodb://123.57.143.189/201508blog');
-var userModel = mongoose.model('User',new mongoose.Schema({
+mongoose.model('User',new mongoose.Schema({
     username:String,
-    password:String
+    password:String,
+}));
+mongoose.model('Article',new mongoose.Schema({
+    title:String,
+    content:String,
+    user:{type:ObjectId,ref:'User'}//对象ID类型，引用User
 }));
 
 global.Model = function(modName){

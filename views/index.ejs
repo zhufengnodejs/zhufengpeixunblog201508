@@ -1,3 +1,21 @@
 <% include include/head%>
-index
+<%
+ for(var i=0;i<articles.length;i++){
+     var article = articles[i];
+     %>
+        <div class="media">
+            <div class="media-left">
+                <a href="#">
+                    <img src="http://gravatar.duoshuo.com/avatar/email?s=48" alt="">
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading"><%=article.title%></h4>
+                <p><%=article.content%></p>
+            </div>
+        </div>
+      <%
+ }
+  %>
+
 <% include include/foot%>

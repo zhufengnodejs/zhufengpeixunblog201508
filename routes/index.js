@@ -7,10 +7,10 @@ var router = express.Router();
  *
  */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
-});
-router.get('/iphone7', function(req, res, next) {
-  res.render('index', { title: 'iphone7' });
+  Model('Article').find({}).populate('user').exec(function(err,articles){
+    res.render('index', { articles: articles});
+  });
+
 });
 
 module.exports = router;

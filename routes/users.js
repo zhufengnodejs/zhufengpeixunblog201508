@@ -1,11 +1,18 @@
 var express = require('express');
+var middleware = require('../middleware');
 var router = express.Router();
 /* GET users listing. */
-router.get('/reg', function(req, res, next) {
-  res.render('user/reg',{});
+router.get('/reg',middleware.checkNotLogin, function(req, res, next) {
+  if(req.session.user){//已经登陆过了
+      req.flash('error','你已经登陆，不能重复登陆');
+      res.redirect('back');
+  }else{
+      res.render('user/reg',{});
+  }
+
 });
 
-router.post('/reg', function(req, res, next) {
+router.post('/reg',middleware.checkNotLogin, function(req, res, next) {
     var user =  req.body;//读取用户提交过来的注册表单
     new Model('User')(user).save(function(err,user){
         if(err){
@@ -16,11 +23,11 @@ router.post('/reg', function(req, res, next) {
     });
 });
 
-router.get('/login', function(req, res, next) {
+router.get('/login',middleware.checkNotLogin, function(req, res, next) {
   res.render('user/login',{});
 });
 
-router.post('/login', function(req, res, next) {
+router.post('/login',middleware.checkNotLogin, function(req, res, next) {
     var user = req.body;
     Model('User').findOne(user,function(err,user){
         if(user){
@@ -34,7 +41,7 @@ router.post('/login', function(req, res, next) {
     });
 });
 
-router.get('/logout', function(req, res, next) {
+router.get('/logout',middleware.checkLogin, function(req, res, next) {
     req.session.user = null;
     req.flash('success','退出成功，请重新登录');
     res.redirect('/users/login');

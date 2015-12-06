@@ -5,7 +5,15 @@ router.get('/add', function(req, res) {
   res.render('article/add', { title: '发表文章' });
 });
 router.post('/add', function(req, res, next) {
-  res.send('发表文章');
+  var article = req.body;
+  article.user = req.session.user._id;
+  new Model('Article')(article).save(function(err,article){
+    if(err){
+      res.redirect('back');
+    }else{
+      res.redirect('/');
+    }
+  });
 });
 
 module.exports = router;
