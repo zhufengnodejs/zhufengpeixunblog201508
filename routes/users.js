@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-
 /* GET users listing. */
 router.get('/reg', function(req, res, next) {
   res.render('user/reg',{});
@@ -15,7 +14,6 @@ router.post('/reg', function(req, res, next) {
             res.redirect('/users/login');
         }
     });
-
 });
 
 router.get('/login', function(req, res, next) {
@@ -23,11 +21,23 @@ router.get('/login', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-  res.send('注册');
+    var user = req.body;
+    Model('User').findOne(user,function(err,user){
+        if(user){
+            req.session.user = user;
+            req.flash('success','登陆成功');
+            res.redirect('/')
+        }else{
+            req.flash('error','登陆失败');
+            res.redirect('/users/login');
+        }
+    });
 });
 
 router.get('/logout', function(req, res, next) {
-  res.send('退出');
+    req.session.user = null;
+    req.flash('success','退出成功，请重新登录');
+    res.redirect('/users/login');
 });
 
 module.exports = router;
